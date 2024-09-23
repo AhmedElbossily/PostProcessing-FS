@@ -69,7 +69,7 @@ def function(files_list, path_1, ex_x, ex_y, avarage_error_list,max_temp_error,c
      df["Points:1"] *= 1000
      df["Points:2"] *= 1000
      df["Temperature"] -= 273
-     df = df.drop(df[df['Points:2'] < 1.].index)
+     df = df.drop(df[df['Points:2'] < 0.5].index)
      start = -40
      stop = 40  # Note: stop is exclusive in rang
      step = 2

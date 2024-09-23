@@ -57,63 +57,6 @@ def get_sorted_files(directory):
   sorted_files = sorted(filtered_files, key=get_yy_value)
   return sorted_files
 
-def function(files_list, path_1, ex_x, ex_y, avarage_error_list,max_temp_error,chart_tilte):
-   for idx, file in enumerate(files_list):
-     path = path_1+"/"+ file
-     df = pd.read_csv(path)
-     df["Points:0"] *= 1000
-     df["Points:1"] *= 1000
-     df["Points:2"] *= 1000
-     df["Temperature"] -= 273
-     df = df.drop(df[df['Points:2'] < -.5].index)
-     start = -40
-     stop = 40  # Note: stop is exclusive in rang
-     step = 2
-     # Use vectorized operations for efficiency
-     bins = np.arange(start, stop + step, step)  # Create bins directly with numpy
-     digitized = np.digitize(df["Points:1"], bins)  # Assign data points to bins
-
-     # Group by bin and find max temperature efficiently
-     temp_list = df.groupby(digitized)["Temperature"].max().to_numpy()
-     temp_list = smooth_temperatures(temp_list, 2)
-     temp_list[0] = temp_list[1]
-     #temp_list[-1] = temp_list[-2]
-
-     # Create interpolation function from bins and temp_list
-     interp_func = interp1d(bins, temp_list, kind='linear')  # Choose linear interpolation
-
-     # Interpolate temperatures at ex_x values
-     interp_temp = interp_func(ex_x)
-     error = []
-     for i, val in enumerate(ex_x):
-      e =100.*(abs(ex_y[i]- interp_temp[i])/ex_y[i])
-      error.append(e)
-      #print(f"x: {val:.2f}, Experimental Temperature: {ex_y[i]:.2f}, Interpolated Temperature: {interp_temp[i]:.2f}, Error:{e:.2f}")
-     
-     avarage_error = np.mean(error)
-     avarage_error_list.append(avarage_error)
-     max_temp_error.append(error[3])
-
-     if len(files_list) ==1:
-       print("------")
-       print("Errors")
-       print(' & ',error[0],' & ',error[1],' & ' ,error[2], ' & ',error[3],' & ' ,error[4],' & ' ,error[5], ' & ',error[6], ' & ',error[7], ' & ',avarage_error)
-       
-       text_file = open("./output/"+chart_tilte[:3]+chart_tilte[4]+".txt", "w")
-
-       text_file.write(' & ' + str(round(error[0],1)) +
-                       ' & ' + str(round(error[1],1)) +
-                       ' & ' + str(round(error[2],1)) +
-                       ' & ' + str(round(error[3],1)) +
-                       ' & ' + str(round(error[4],1)) +
-                       ' & ' + str(round(error[5],1)) +
-                       ' & ' + str(round(error[6],1)) +
-                       ' & ' + str(round(error[7],1)) +
-                       ' & '+ str(round(avarage_error,1)))
-       text_file.close()
-
-   return bins, temp_list
-
 def plot_chart(bins, temp_list, ex_x, ex_y,chart_tilte):
    # setting font sizeto 30
    plt.rcParams.update({'font.size': 12})
@@ -188,6 +131,17 @@ for path in paths:
   for i in range(len(y_max_list)):
     width.append(y_max_list[i] - y_min_list[i])
     centerline.append((y_max_list[i] + y_min_list[i])/2.)
+
+  # Save cell_thicknesses to a CSV file
+  csv_file_path = "./deposition/All_widthes.csv"
+  mode = 'w' if path == paths[0] else 'a'
+  header = ['fileName'] + [f'w_{i+1}' for i in range(len(width))]
+    
+  with open(csv_file_path, mode) as csv_file:
+    if mode == 'w':
+      csv_file.write(','.join(header) + '\n')
+    csv_file.write(f"{os.path.basename(path).replace('.csv', '')}," + ','.join(map(str, width)) + '\n')
+    
 
   point_data = []
   point_data.append(np.min(width))

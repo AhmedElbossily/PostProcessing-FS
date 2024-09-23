@@ -107,7 +107,17 @@ for path in paths:
 
     # Calculate thickness in cells
     cell_counts, cell_thicknesses = calculate_thickness_in_cells(x_coords, y_coords, z_coords, cell_size=(2, 2, 3))
-    #cell_thicknesses = [round(num, 1) for num in cell_thicknesses]
+    
+    # Save cell_thicknesses to a CSV file
+    csv_file_path = "./deposition/All_thicknesses.csv"
+    mode = 'w' if path == paths[0] else 'a'
+    header = ['fileName'] + [f'th_{i+1}' for i in range(len(cell_thicknesses))]
+    
+    with open(csv_file_path, mode) as csv_file:
+        if mode == 'w':
+            csv_file.write(','.join(header) + '\n')
+        csv_file.write(f"{os.path.basename(path).replace('.csv', '')}," + ','.join(map(str, cell_thicknesses)) + '\n')
+    
     
     average_thickness = np.average(cell_thicknesses)
     # Check if any element in cell_thicknesses array is less than 0.1 and replace it with average_thickness
