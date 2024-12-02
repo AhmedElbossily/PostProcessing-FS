@@ -106,9 +106,9 @@ def plot_chart(bins, temp_list, ex_x, ex_y,chart_tilte):
 
 ####################################################################################################################################################     
 chart_tilte=""
-#path_1 = './1200-6'  #set A
+path_1 = './1200-6'  #set A
 #path_1 = './900-6'  #set B # change smoothing length to 3
-path_1 = './1500-6' #set C
+#path_1 = './1500-6' #set C
 #path_1 = './1200-4' #set D
 #path_1 = './1200-8' #set E
 
@@ -133,7 +133,7 @@ max_temp_error =[]
 
 path_ex= "./ex/ex_"+path_1[2:]+".csv"
 df_ex = pd.read_csv(path_ex)
-ex_x =df_ex["x"].to_numpy()
+ex_x =df_ex["x"].to_numpy()-2.5
 ex_y = df_ex["y"].to_numpy()
 
 bins, temp_list = function(files_list, path_1, ex_x, ex_y, avarage_error_list,max_temp_error, chart_tilte)

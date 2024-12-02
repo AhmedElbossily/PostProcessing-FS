@@ -1,3 +1,0 @@
-min_thickness: 2.011
-average_thickness: 2.5671846153846154
-max_thickness: 2.992

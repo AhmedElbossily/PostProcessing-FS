@@ -6,23 +6,32 @@ import pandas as pd
 from scipy import stats as st
 from scipy.interpolate import interp1d
 
-# Define the file paths
+
+
+
 """ paths = [
-    "./deposition/1200-4_0.75.csv",
-    "./deposition/1200-6_0.75.csv",
-    "./deposition/1200-8_0.75.csv",
-    "./deposition/1500-6_0.75.csv",
-    "./deposition/0900-6_0.75.csv",
-    #"./deposition/900-6_0.65.csv"
-] """
+    "./depositioN/0900-6_0.75.csv",
+    "./depositioN/1200-6_0.75.csv",
+    "./depositioN/1500-6_0.75.csv",
+    "./depositioN/1200-4_0.75.csv",
+    "./depositioN/1200-8_0.75.csv"
+]  """
 
 paths = [
-    "./deposition/1200-4_0.75.csv",
-    "./deposition/1200-6_0.75.csv",
-    "./deposition/1200-8_0.75.csv",
-    "./deposition/1500-6_0.75.csv",
-    "./deposition/0900-6_0.75.csv"
-]
+    "./deposi1200/0900-6_0.75.csv",
+    "./deposi1200/1200-6_0.75.csv",
+    "./deposi1200/1500-6_0.75.csv",
+    "./deposi1200/1200-4_0.75.csv",
+    "./deposi1200/1200-8_0.75.csv"
+]  
+
+paths = [
+    "./deposi1500/0900-6_0.75.csv",
+    "./deposi1500/1200-6_0.75.csv",
+    "./deposi1500/1500-6_0.75.csv",
+    "./deposi1500/1200-4_0.75.csv",
+    "./deposi1500/1200-8_0.75.csv"
+] 
 
 t_1200_4=[]
 t_1200_6=[]
@@ -31,9 +40,8 @@ t_1500_6=[]
 t_0900_6=[]
 t_0600_6=[]
 # Generate the X and Y grid
-min_x, max_x = 20, 50
-min_y, max_y = -4, 5
-
+min_x, max_x = 38, 40
+min_y, max_y = -5, 5
 
 """ min_x, max_x = 36, 38
 min_y, max_y = -5, 9 """
@@ -225,6 +233,8 @@ for i in range(0,3):
 plt.plot([8,8,8],t_1200_8, c="b") """
 
 plt.ylabel("Deposition thickness [mm]")
+plt.xlabel("Simulation")
+
 plt.ylim((0,4.))
 plt.grid(True)  # Enable the grid
 
@@ -247,14 +257,13 @@ if rpm == 0:
     plt.savefig("./deposition/output_plt/tft_2.pdf")
 
 else:
-    plt.errorbar([900,1200,1500], [t_0900_6[1],t_1200_6[1],t_1500_6[1]], yerr=[[t_0900_6[1]-t_0900_6[0], t_1200_6[1]-t_1200_6[0], t_1500_6[1]-t_1500_6[0]], [t_0900_6[2]-t_0900_6[1], t_1200_6[2]-t_1200_6[1], t_1500_6[2]-t_1500_6[1]]],marker="s",c="b", linestyle="--",label="Simulation", linewidth=2)
+    plt.errorbar(["1st","2nd","3rd"], [t_0900_6[1],t_1200_6[1],t_1500_6[1]], yerr=[[t_0900_6[1]-t_0900_6[0], t_1200_6[1]-t_1200_6[0], t_1500_6[1]-t_1500_6[0]], [t_0900_6[2]-t_0900_6[1], t_1200_6[2]-t_1200_6[1], t_1500_6[2]-t_1500_6[1]]],marker="s",c="b", linestyle="--",label="Simulation", linewidth=2)
    # plt.errorbar([600,900,1200,1500], [t_0600_6[1],t_0900_6[1],t_1200_6[1],t_1500_6[1]], yerr=[[t_0600_6[1]-t_0600_6[0], t_0900_6[1]-t_0900_6[0], t_1200_6[1]-t_1200_6[0], t_1500_6[1]-t_1500_6[0]], [t_0600_6[2]-t_0600_6[1], t_0900_6[2]-t_0900_6[1], t_1200_6[2]-t_1200_6[1], t_1500_6[2]-t_1500_6[1]]],marker="s",c="b", linestyle="--",label="Simulation", linewidth=2)
     #plt.errorbar([600,1200], [t_0600_6[1],t_1200_6[1]], yerr=[[t_0600_6[1]-t_0600_6[0], t_1200_6[1]-t_1200_6[0]], [t_0600_6[2]-t_0600_6[1], t_1200_6[2]-t_1200_6[1]]], marker="s", c="b", linestyle="--", label="Simulation", linewidth=2)
     #plt.errorbar([900,1200,1500],[exp_t_900_6[1],exp_t_1200_6[1], exp_t_1500_6[1]], yerr=[[exp_t_900_6[1]-exp_t_900_6[0], exp_t_1200_6[1]-exp_t_1200_6[0], exp_t_1500_6[1]-exp_t_1500_6[0]], [exp_t_900_6[2]-exp_t_900_6[1], exp_t_1200_6[2]-exp_t_1200_6[1], exp_t_1500_6[2]-exp_t_1500_6[1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
-    plt.errorbar([600,900,1200,1500],[exp_t_600_6[1],exp_t_900_6[1],exp_t_1200_6[1], exp_t_1500_6[1]], yerr=[[exp_t_600_6[1]-exp_t_600_6[0],exp_t_900_6[1]-exp_t_900_6[0], exp_t_1200_6[1]-exp_t_1200_6[0], exp_t_1500_6[1]-exp_t_1500_6[0]], [exp_t_600_6[2]-exp_t_600_6[1],exp_t_900_6[2]-exp_t_900_6[1], exp_t_1200_6[2]-exp_t_1200_6[1], exp_t_1500_6[2]-exp_t_1500_6[1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
-    plt.xlabel("Rod rotational speed [rpm]")
+    #plt.errorbar([600,900,1200,1500],[exp_t_600_6[1],exp_t_900_6[1],exp_t_1200_6[1], exp_t_1500_6[1]], yerr=[[exp_t_600_6[1]-exp_t_600_6[0],exp_t_900_6[1]-exp_t_900_6[0], exp_t_1200_6[1]-exp_t_1200_6[0], exp_t_1500_6[1]-exp_t_1500_6[0]], [exp_t_600_6[2]-exp_t_600_6[1],exp_t_900_6[2]-exp_t_900_6[1], exp_t_1200_6[2]-exp_t_1200_6[1], exp_t_1500_6[2]-exp_t_1500_6[1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
+    #plt.xlabel("Rod rotational speed [rpm]")
     plt.legend()
-    #plt.title("Results of the new model for 1500 rpm only")
     plt.savefig("./deposition/output_plt/tfr_2.pdf")
 
 plt.show()

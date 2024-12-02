@@ -74,15 +74,30 @@ def plot_chart(bins, temp_list, ex_x, ex_y,chart_tilte):
    plt.show() 
 
 ####################################################################################################################################################     
+""" paths = [
+  "./deposi1200/1200-4_0.75.csv",
+  "./deposi1200/1200-6_0.75.csv",
+  "./deposi1200/1200-8_0.75.csv",
+  "./deposi1200/1500-6_0.75.csv",
+  "./deposi1200/0900-6_0.75.csv",
+]  """
 
-paths = [
-  "./deposition/1200-4_0.75.csv",
-  "./deposition/1200-6_0.75.csv",
-  "./deposition/1200-8_0.75.csv",
-  "./deposition/1500-6_0.75.csv",
-  "./deposition/0900-6_0.75.csv",
-  "./deposition/0600-6_0.75.csv",
+""" paths = [
+  "./depositioN/1200-4_0.75.csv",
+  "./depositioN/1200-6_0.75.csv",
+  "./depositioN/1200-8_0.75.csv",
+  "./depositioN/1500-6_0.75.csv",
+  "./depositioN/0900-6_0.75.csv",
 ]
+ """
+paths = [
+  "./deposi1500/1200-4_0.75.csv",
+  "./deposi1500/1200-6_0.75.csv",
+  "./deposi1500/1200-8_0.75.csv",
+  "./deposi1500/1500-6_0.75.csv",
+  "./deposi1500/0900-6_0.75.csv",
+] 
+
 points_data=[]
 for path in paths:
   p_size = float(path[-8:-4])
@@ -93,8 +108,8 @@ for path in paths:
   df["Points:1"] *= -1000
   df["Points:2"] *= 1000
 
-  start = 30 # Start from 35 mm
-  stop = 50   # Stop at 53 mm
+  start = 39 # Start from 35 mm
+  stop =  41  # Stop at 53 mm
   step = 2
 
   # Use vectorized operations for efficiency
@@ -112,7 +127,7 @@ for path in paths:
   print(len(y_max_list))
   print(len(y_min_list))
 
-  #plt.rcParams["figure.figsize"] = (13, 5)
+  plt.rcParams["figure.figsize"] = (13, 5)
   plt.rcParams.update({'font.size': 12})
   plt.text(18, 7, 'Advancing side')
   plt.text(18, -7, 'Retreating side')
@@ -121,11 +136,11 @@ for path in paths:
   plt.scatter(df["Points:0"].to_numpy(), df["Points:1"].to_numpy(), marker="o", color="royalblue", s=300)
 
   for i in range(0, len(bins)):
-    if i == 0:
+    """ if i == 0:
       plt.plot([bins[i], bins[i]], [y_max_list[i], y_min_list[i]], linewidth=2, color="lightgreen",
            label="Sampled width")
     else:
-      plt.plot([bins[i], bins[i]], [y_max_list[i], y_min_list[i]], linewidth=2, color="lightgreen")
+      plt.plot([bins[i], bins[i]], [y_max_list[i], y_min_list[i]], linewidth=2, color="lightgreen") """
 
   width = []
   centerline = []
@@ -156,15 +171,24 @@ for path in paths:
   print("Average Width", np.average(width))
   print("max Width", np.max(width))
 
-  plt.plot(bins, y_max_list, color="r", linewidth=2, label="Deposition edges")
-  plt.plot(bins, y_min_list, color="r", linewidth=2)
- # plt.plot(bins, centerline, color="r", linewidth=2)
+  plt.plot(bins[:-1], y_max_list[:-1], color="r", linewidth=2, label="Deposition edges")
+  plt.plot(bins[:-1], y_min_list[:-1], color="r", linewidth=2)
+  plt.plot(bins[:-1], centerline[:-1], color="r", linewidth=2)
   plt.arrow(x=7, y=0, dx=55, dy=0, width=.2, color="black")
   plt.xlabel("Deposition length, x direction [mm]")
   plt.ylabel("Deposition width, y direction [mm]")
 
   plt.legend(loc='upper right')
-  #plt.title(f"Deposition width Distribution: {path[-15:-4]}")
+
+  sim =""
+  if path[-15:-4]== "0900-6_0.75":
+    sim = "1st"
+  if path[-15:-4]== "1200-6_0.75":
+    sim = "2nd"
+  if path[-15:-4]== "1500-6_0.75":
+    sim = "3rd"
+     
+  plt.title(f"Deposition width Distribution: {sim}")
 
 
   plt.savefig(f"./deposition/output_plt_width/width_validation_{path[-15:-4]}.pdf")
@@ -189,16 +213,15 @@ if rpm == 0:
     plt.savefig("./deposition/output_plt_width/wv_ts.pdf")
 
 else:
-    plt.errorbar([600,900,1200,1500],[points_data[5][1],points_data[4][1],points_data[1][1], points_data[3][1]], yerr= [[points_data[5][1]-points_data[5][0],points_data[4][1]-points_data[4][0], points_data[1][1]-points_data[1][0], points_data[3][1]-points_data[3][0]],[points_data[5][2]-points_data[5][1], points_data[4][2]-points_data[4][1], points_data[1][2]-points_data[1][1], points_data[3][2]-points_data[3][1]]],marker="s",c="b", linestyle="--",label="Simulation",linewidth=2)
+    #plt.errorbar([600,900,1200,1500],[points_data[5][1],points_data[4][1],points_data[1][1], points_data[3][1]], yerr= [[points_data[5][1]-points_data[5][0],points_data[4][1]-points_data[4][0], points_data[1][1]-points_data[1][0], points_data[3][1]-points_data[3][0]],[points_data[5][2]-points_data[5][1], points_data[4][2]-points_data[4][1], points_data[1][2]-points_data[1][1], points_data[3][2]-points_data[3][1]]],marker="s",c="b", linestyle="--",label="Simulation",linewidth=2)
+    plt.errorbar(["1st","2nd","3rd"],[points_data[4][1],points_data[1][1], points_data[3][1]], yerr= [[points_data[4][1]-points_data[4][0], points_data[1][1]-points_data[1][0], points_data[3][1]-points_data[3][0]],[ points_data[4][2]-points_data[4][1], points_data[1][2]-points_data[1][1], points_data[3][2]-points_data[3][1]]],marker="s",c="b", linestyle="--",label="Simulation",linewidth=2)
    
     exp = [[20.5,20.5 ,20.5],
            [18.3, 19.2, 20.1],
            [17.5, 18.3, 18.9],
            [16.3, 16.8, 17.4]]
-    plt.errorbar([600,900,1200,1500],[exp[0][1],exp[1][1], exp[2][1],exp[3][1]], yerr= [[exp[0][1]-exp[0][0], exp[1][1]-exp[1][0], exp[2][1]-exp[2][0], exp[3][1]-exp[3][0]],[exp[0][2]-exp[0][1], exp[1][2]-exp[1][1], exp[2][2]-exp[2][1], exp[3][2]-exp[3][1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
+   # plt.errorbar([600,900,1200,1500],[exp[0][1],exp[1][1], exp[2][1],exp[3][1]], yerr= [[exp[0][1]-exp[0][0], exp[1][1]-exp[1][0], exp[2][1]-exp[2][0], exp[3][1]-exp[3][0]],[exp[0][2]-exp[0][1], exp[1][2]-exp[1][1], exp[2][2]-exp[2][1], exp[3][2]-exp[3][1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
     plt.xlabel("Rod rotational speed [rpm]")
-    plt.xlim((800,1600))
-
     plt.legend()
     plt.savefig("./deposition/output_plt_width/wv_rpm.pdf") 
 
