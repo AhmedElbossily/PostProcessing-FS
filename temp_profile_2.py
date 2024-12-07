@@ -91,17 +91,17 @@ def function(files_list, path_1, ex_x, ex_y, avarage_error_list,max_temp_error,c
 def plot_chart(bins, temp_list, ex_x, ex_y,chart_tilte):
    # setting font sizeto 30
    plt.rcParams.update({'font.size': 12})
-   plt.plot(bins, temp_list, label="Simulation", color = "b")  
-   plt.scatter(ex_x, ex_y, label="Experiment",marker="*", color="r")
-   plt.text(-39, 215, 'Advancing side')
-   plt.text(15, 215, 'Retreating side')
+   plt.plot(bins, temp_list, color = "b")  
+   #plt.scatter(ex_x, ex_y,marker="*", color="r")
+   #plt.text(-39, 215, 'Advancing side')
+   #plt.text(15, 215, 'Retreating side')
 
-   plt.title(chart_tilte)
-   plt.xlabel("Distance to substrate center [mm]")
-   plt.ylabel("Temperature [°C]")
+   #plt.title(chart_tilte)
+  # plt.xlabel("Distance to substrate center [mm]")
+   #plt.ylabel("Temperature [°C]")
    plt.legend()
    plt.grid()
-   plt.savefig("./output/"+chart_tilte[:3]+chart_tilte[4]+".pdf")
+   plt.savefig("./output/"+chart_tilte[:3]+chart_tilte[4]+".jpg", dpi=300, bbox_inches='tight')
    plt.show() 
 
 ####################################################################################################################################################     

@@ -7,7 +7,7 @@ y_coords = []
 z_coords = []
 joined = []
 
-id = "6832"
+id = "6638"
 # Read the CSV file
 csv_file = './material_flow/'+id+'.csv'
 
@@ -43,15 +43,15 @@ for i in range(len(x_coords) - 1):
         flage_2=0
         if i != 0: 
         #if i > 0 and i < len(x_coords) - 2:
-            plt.scatter(x_coords[i:i + 2], y_coords[i:i + 2], color ="b")
+            plt.scatter(x_coords[i:i + 2], y_coords[i:i + 2], color ="Particle before deposition")
 
 
 
 
 
 # Add labels and title
-plt.xlabel('x [mm]')
-plt.ylabel('y [mm]')
+plt.xlabel('y [mm]')
+plt.ylabel('x [mm]')
 plt.ylim((-15,15))
 plt.legend()
 

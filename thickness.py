@@ -31,8 +31,8 @@ t_1500_6=[]
 t_0900_6=[]
 t_0600_6=[]
 # Generate the X and Y grid
-min_x, max_x = 20, 50
-min_y, max_y = -4, 5
+min_x, max_x = 20, 55
+min_y, max_y = -4, 8
 
 
 """ min_x, max_x = 36, 38
@@ -178,10 +178,10 @@ for path in paths:
 
     # Plotting
     fig, ax = plt.subplots(figsize=(13, 5))
-    plt.rcParams.update({'font.size': 12})
+    plt.rcParams.update({'font.size': 20})
     #plt.rcParams["figure.figsize"] = (13,5)
 
-    plt.title(f"Deposition Thickness Distribution: {path[-15:-4]}")
+    #plt.title(f"Deposition Thickness Distribution: {path[-15:-4]}")
     # Scatter plot overlay
     ax.scatter(df["Points:0"].to_numpy(), df["Points:1"].to_numpy(), marker="o", color="royalblue", s=300)
 
@@ -191,21 +191,21 @@ for path in paths:
     # Plot the grid with thickness using pcolormesh
     cax = ax.pcolormesh(X, Y, cell_counts.T, cmap='viridis', shading='auto')
     # Adding color bar
-    fig.colorbar(cax, ax=ax,fraction=0.046, pad=0).set_label("Cell thickness [mm]")
-
+    #fig.colorbar(cax, ax=ax,fraction=0.046, pad=0).set_label("Cell thickness [mm]")
+    fig.colorbar(cax, ax=ax,fraction=0.046, pad=0)
     # Adding labels and title
-    ax.set_xlabel("Deposition length, x direction [mm]")
-    ax.set_ylabel("Deposition width, y direction [mm]")
+    #ax.set_xlabel("Deposition length, x direction [mm]")
+    #ax.set_ylabel("Deposition width, y direction [mm]")
 
     # Add arrow and annotations
     ax.arrow(x=7, y=0, dx=55, dy=0, width=.2, color="black")
-    ax.text(17, 7, 'Advancing side')
-    ax.text(17, -7, 'Retreating side')
-    ax.text(12, 1, 'Deposition')
-    ax.text(12, -2, 'Direction')
+    #ax.text(20, 7, 'AS')
+    #ax.text(20, -7, 'RS')
+    #ax.text(15, 1, 'Deposition')
+    #ax.text(15, -2, 'Direction')
 
     plt.tight_layout()
-    plt.savefig(f"./deposition/output_plt/thickness_validation_{path[-15:-4]}.pdf")
+    plt.savefig(f"./deposition/output_plt/thickness_validation_{path[-15:-4]}.jpg", dpi=300, bbox_inches='tight')
     #plt.show()
 
 marker_list = ["*","s","*"]
@@ -251,7 +251,9 @@ else:
    # plt.errorbar([600,900,1200,1500], [t_0600_6[1],t_0900_6[1],t_1200_6[1],t_1500_6[1]], yerr=[[t_0600_6[1]-t_0600_6[0], t_0900_6[1]-t_0900_6[0], t_1200_6[1]-t_1200_6[0], t_1500_6[1]-t_1500_6[0]], [t_0600_6[2]-t_0600_6[1], t_0900_6[2]-t_0900_6[1], t_1200_6[2]-t_1200_6[1], t_1500_6[2]-t_1500_6[1]]],marker="s",c="b", linestyle="--",label="Simulation", linewidth=2)
     #plt.errorbar([600,1200], [t_0600_6[1],t_1200_6[1]], yerr=[[t_0600_6[1]-t_0600_6[0], t_1200_6[1]-t_1200_6[0]], [t_0600_6[2]-t_0600_6[1], t_1200_6[2]-t_1200_6[1]]], marker="s", c="b", linestyle="--", label="Simulation", linewidth=2)
     #plt.errorbar([900,1200,1500],[exp_t_900_6[1],exp_t_1200_6[1], exp_t_1500_6[1]], yerr=[[exp_t_900_6[1]-exp_t_900_6[0], exp_t_1200_6[1]-exp_t_1200_6[0], exp_t_1500_6[1]-exp_t_1500_6[0]], [exp_t_900_6[2]-exp_t_900_6[1], exp_t_1200_6[2]-exp_t_1200_6[1], exp_t_1500_6[2]-exp_t_1500_6[1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
-    plt.errorbar([600,900,1200,1500],[exp_t_600_6[1],exp_t_900_6[1],exp_t_1200_6[1], exp_t_1500_6[1]], yerr=[[exp_t_600_6[1]-exp_t_600_6[0],exp_t_900_6[1]-exp_t_900_6[0], exp_t_1200_6[1]-exp_t_1200_6[0], exp_t_1500_6[1]-exp_t_1500_6[0]], [exp_t_600_6[2]-exp_t_600_6[1],exp_t_900_6[2]-exp_t_900_6[1], exp_t_1200_6[2]-exp_t_1200_6[1], exp_t_1500_6[2]-exp_t_1500_6[1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
+    #plt.errorbar([600,900,1200,1500],[exp_t_600_6[1],exp_t_900_6[1],exp_t_1200_6[1], exp_t_1500_6[1]], yerr=[[exp_t_600_6[1]-exp_t_600_6[0],exp_t_900_6[1]-exp_t_900_6[0], exp_t_1200_6[1]-exp_t_1200_6[0], exp_t_1500_6[1]-exp_t_1500_6[0]], [exp_t_600_6[2]-exp_t_600_6[1],exp_t_900_6[2]-exp_t_900_6[1], exp_t_1200_6[2]-exp_t_1200_6[1], exp_t_1500_6[2]-exp_t_1500_6[1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
+    plt.errorbar([900,1200,1500],[exp_t_900_6[1],exp_t_1200_6[1], exp_t_1500_6[1]], yerr=[[exp_t_900_6[1]-exp_t_900_6[0], exp_t_1200_6[1]-exp_t_1200_6[0], exp_t_1500_6[1]-exp_t_1500_6[0]], [exp_t_900_6[2]-exp_t_900_6[1], exp_t_1200_6[2]-exp_t_1200_6[1], exp_t_1500_6[2]-exp_t_1500_6[1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
+   
     plt.xlabel("Rod rotational speed [rpm]")
     plt.legend()
     #plt.title("Results of the new model for 1500 rpm only")

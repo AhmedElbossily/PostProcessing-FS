@@ -27,6 +27,7 @@ def get_filenames(path):
 
 import os
 
+
 def get_sorted_files(directory):
   """
   Returns a sorted list of all files in the given directory, sorted by the "yy" value 
@@ -93,8 +94,8 @@ for path in paths:
   df["Points:1"] *= -1000
   df["Points:2"] *= 1000
 
-  start = 30 # Start from 35 mm
-  stop = 50   # Stop at 53 mm
+  start = 20 # Start from 35 mm
+  stop = 55   # Stop at 53 mm
   step = 2
 
   # Use vectorized operations for efficiency
@@ -112,18 +113,17 @@ for path in paths:
   print(len(y_max_list))
   print(len(y_min_list))
 
-  #plt.rcParams["figure.figsize"] = (13, 5)
-  plt.rcParams.update({'font.size': 12})
-  plt.text(18, 7, 'Advancing side')
-  plt.text(18, -7, 'Retreating side')
-  plt.text(12, 1, 'Deposition')
-  plt.text(12, -2, 'Direction')
+  plt.rcParams["figure.figsize"] = (13, 5)
+  plt.rcParams.update({'font.size': 20})
+  #plt.text(18, 7, 'AS')
+  #plt.text(18, -7, 'RS')
+  #plt.text(15, 1, 'Deposition')
+ # plt.text(15, -2, 'Direction')
   plt.scatter(df["Points:0"].to_numpy(), df["Points:1"].to_numpy(), marker="o", color="royalblue", s=300)
 
   for i in range(0, len(bins)):
     if i == 0:
-      plt.plot([bins[i], bins[i]], [y_max_list[i], y_min_list[i]], linewidth=2, color="lightgreen",
-           label="Sampled width")
+      plt.plot([bins[i], bins[i]], [y_max_list[i], y_min_list[i]], linewidth=2, color="lightgreen")
     else:
       plt.plot([bins[i], bins[i]], [y_max_list[i], y_min_list[i]], linewidth=2, color="lightgreen")
 
@@ -156,18 +156,19 @@ for path in paths:
   print("Average Width", np.average(width))
   print("max Width", np.max(width))
 
-  plt.plot(bins, y_max_list, color="r", linewidth=2, label="Deposition edges")
+  plt.plot(bins, y_max_list, color="r", linewidth=2)
   plt.plot(bins, y_min_list, color="r", linewidth=2)
- # plt.plot(bins, centerline, color="r", linewidth=2)
+  ##plt.plot(bins, centerline, color="r", linewidth=2, linestyle="--", label="Deposition centerline")
+  plt.plot(bins, centerline, color="r", linewidth=2, linestyle="--")
   plt.arrow(x=7, y=0, dx=55, dy=0, width=.2, color="black")
-  plt.xlabel("Deposition length, x direction [mm]")
-  plt.ylabel("Deposition width, y direction [mm]")
+  #plt.xlabel("Deposition length, x direction [mm]")
+  #plt.ylabel("Deposition width, y direction [mm]")
 
   plt.legend(loc='upper right')
   #plt.title(f"Deposition width Distribution: {path[-15:-4]}")
 
 
-  plt.savefig(f"./deposition/output_plt_width/width_validation_{path[-15:-4]}.pdf")
+  plt.savefig(f"./deposition/output_plt_width/width_validation_{path[-15:-4]}.jpg", dpi=300, bbox_inches='tight')
   plt.show()
 
 plt.rcParams.update({'font.size': 15})
@@ -189,13 +190,19 @@ if rpm == 0:
     plt.savefig("./deposition/output_plt_width/wv_ts.pdf")
 
 else:
-    plt.errorbar([600,900,1200,1500],[points_data[5][1],points_data[4][1],points_data[1][1], points_data[3][1]], yerr= [[points_data[5][1]-points_data[5][0],points_data[4][1]-points_data[4][0], points_data[1][1]-points_data[1][0], points_data[3][1]-points_data[3][0]],[points_data[5][2]-points_data[5][1], points_data[4][2]-points_data[4][1], points_data[1][2]-points_data[1][1], points_data[3][2]-points_data[3][1]]],marker="s",c="b", linestyle="--",label="Simulation",linewidth=2)
-   
-    exp = [[20.5,20.5 ,20.5],
+    #plt.errorbar([600,900,1200,1500],[points_data[5][1],points_data[4][1],points_data[1][1], points_data[3][1]], yerr= [[points_data[5][1]-points_data[5][0],points_data[4][1]-points_data[4][0], points_data[1][1]-points_data[1][0], points_data[3][1]-points_data[3][0]],[points_data[5][2]-points_data[5][1], points_data[4][2]-points_data[4][1], points_data[1][2]-points_data[1][1], points_data[3][2]-points_data[3][1]]],marker="s",c="b", linestyle="--",label="Simulation",linewidth=2)
+    plt.errorbar([900,1200,1500],[points_data[4][1],points_data[1][1], points_data[3][1]], yerr= [[points_data[4][1]-points_data[4][0], points_data[1][1]-points_data[1][0], points_data[3][1]-points_data[3][0]],[points_data[4][2]-points_data[4][1], points_data[1][2]-points_data[1][1], points_data[3][2]-points_data[3][1]]],marker="s",c="b", linestyle="--",label="Simulation",linewidth=2)
+    """ exp = [[20.5,20.5 ,20.5],
            [18.3, 19.2, 20.1],
            [17.5, 18.3, 18.9],
            [16.3, 16.8, 17.4]]
     plt.errorbar([600,900,1200,1500],[exp[0][1],exp[1][1], exp[2][1],exp[3][1]], yerr= [[exp[0][1]-exp[0][0], exp[1][1]-exp[1][0], exp[2][1]-exp[2][0], exp[3][1]-exp[3][0]],[exp[0][2]-exp[0][1], exp[1][2]-exp[1][1], exp[2][2]-exp[2][1], exp[3][2]-exp[3][1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
+  """  
+    exp = [[20.5,20.5 ,20.5],
+           [18.3, 19.2, 20.1],
+           [17.5, 18.3, 18.9],
+           [16.3, 16.8, 17.4]]
+    plt.errorbar([900,1200,1500],[exp[1][1], exp[2][1],exp[3][1]], yerr= [[exp[1][1]-exp[1][0], exp[2][1]-exp[2][0], exp[3][1]-exp[3][0]],[exp[1][2]-exp[1][1], exp[2][2]-exp[2][1], exp[3][2]-exp[3][1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
     plt.xlabel("Rod rotational speed [rpm]")
     plt.xlim((800,1600))
 
