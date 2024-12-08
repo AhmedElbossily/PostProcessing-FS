@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import make_interp_spline
 import numpy as np
 
+
 # Initialize lists to hold the X, Y, and Z coordinates
 x_coords = []
 y_coords = []
