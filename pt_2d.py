@@ -11,13 +11,15 @@ z_coords = []
 joined = []
 pl = []
 
-id = "6832_new"
+id = "6832_new_new_new"
+id = "6973"
+#id = "6832_new"
 #id = "6713"
 #id = "6638"
 plt.rcParams.update({'font.size': 20})
-plt.figure(figsize=(11.25, 5))
-plt.ylim((-5,5))
-plt.xlim((-5,17.5))
+plt.figure(figsize=(10, 10))
+plt.ylim((-7,7))
+plt.xlim((-7,13))
 
 # Read the CSV file
 csv_file = './material_flow/'+id+'.csv'
@@ -47,7 +49,7 @@ spl_z = make_interp_spline(t, z_coords, k=2)
 spl_joined = make_interp_spline(t, joined, k=0)
 
 # Generate new points for a smoother curve
-t_new = np.linspace(0, 1, 1000)
+t_new = np.linspace(0, 1, 10000)
 x_smooth = spl_x(t_new)
 y_smooth = spl_y(t_new)
 z_smooth = spl_z(t_new)
@@ -75,13 +77,21 @@ for i in range(len(joined_smooth) - 1):
         else:
             plt.plot(x_smooth[i:i+2], y_smooth[i:i+2], color='black', alpha=1)
 
-for i in range(len(joined_smooth) - 1):
+""" for i in range(len(joined_smooth) - 1):
     if joined_smooth[i] == 2:
         if i % 20 == 0:
             plt.scatter(x_smooth[i], y_smooth[i], color="r", alpha=1)
     if joined_smooth[i] == 0:
         if i % 5 == 0:
-            plt.scatter(x_smooth[i], y_smooth[i], color='blue', alpha=1)
+            plt.scatter(x_smooth[i], y_smooth[i], color='blue', alpha=1) """
+
+for i in range(len(joined) - 1):
+    if joined[i] == 2:
+        if i % 1 == 0:
+            plt.scatter(x_coords[i], y_coords[i], color="r", alpha=1)
+    if joined[i] == 0:
+        if i % 2 == 0:
+            plt.scatter(x_coords[i], y_coords[i], color='blue', alpha=1)
 
 plt.scatter(x_smooth[10], y_smooth[10], color='blue', alpha=1)  # Removed label
 plt.scatter(x_smooth[-1], y_smooth[-1], color='r', alpha=1)  # Removed label

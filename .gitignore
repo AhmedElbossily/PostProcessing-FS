@@ -23,6 +23,7 @@
 *.zip
 *.txt
 *.jpg
+*.png
 
 # Logs and databases #
 ######################
