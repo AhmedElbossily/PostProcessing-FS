@@ -60,7 +60,7 @@ def get_sorted_files(directory):
 
 def plot_chart(bins, temp_list, ex_x, ex_y,chart_tilte):
    # setting font sizeto 30
-   plt.rcParams.update({'font.size': 12})
+   plt.rcParams.update({'font.size': 20})
    plt.plot(bins, temp_list, label="Simulation", color = "b")  
    plt.scatter(ex_x, ex_y, label="Experiment",marker="*", color="r")
    plt.text(-39, 215, 'Advancing side')
@@ -114,7 +114,7 @@ for path in paths:
   print(len(y_min_list))
 
   plt.rcParams["figure.figsize"] = (13, 5)
-  plt.rcParams.update({'font.size': 20})
+  #plt.rcParams.update({'font.size': 20})
   #plt.text(18, 7, 'AS')
   #plt.text(18, -7, 'RS')
   #plt.text(15, 1, 'Deposition')
@@ -161,17 +161,17 @@ for path in paths:
   ##plt.plot(bins, centerline, color="r", linewidth=2, linestyle="--", label="Deposition centerline")
   plt.plot(bins, centerline, color="r", linewidth=2, linestyle="--")
   plt.arrow(x=7, y=0, dx=55, dy=0, width=.2, color="black")
-  #plt.xlabel("Deposition length, x direction [mm]")
-  #plt.ylabel("Deposition width, y direction [mm]")
+  """ plt.xlabel("Deposition length, x direction [mm]")
+  plt.ylabel("Deposition width, y direction [mm]") """
 
-  plt.legend(loc='upper right')
+  #plt.legend(loc='upper right')
   #plt.title(f"Deposition width Distribution: {path[-15:-4]}")
 
-
+  plt.rcParams.update({'font.size': 20})
   plt.savefig(f"./deposition/output_plt_width/width_validation_{path[-15:-4]}.jpg", dpi=300, bbox_inches='tight')
   plt.show()
 
-plt.rcParams.update({'font.size': 15})
+plt.rcParams.update({'font.size': 20})
 plt.ylim((0,35))
 plt.grid(True)  # Enable the grid
 plt.ylabel("Deposition width [mm]")
@@ -187,7 +187,8 @@ if rpm == 0:
     plt.errorbar([4,6,8],[exp[0][1],exp[1][1], exp[2][1]], yerr= [[exp[0][1]-exp[0][0], exp[1][1]-exp[1][0], exp[2][1]-exp[2][0]],[exp[0][2]-exp[0][1], exp[1][2]-exp[1][1], exp[2][2]-exp[2][1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
     plt.xlabel("Substrate traverse speed [mm/s]")
     plt.legend()
-    plt.savefig("./deposition/output_plt_width/wv_ts.pdf")
+    plt.savefig("./deposition/output_plt_width/wv_ts.pdf", dpi=300, bbox_inches='tight')
+    plt.savefig("./deposition/output_plt_width/wv_ts.jpg", dpi=300, bbox_inches='tight')
 
 else:
     #plt.errorbar([600,900,1200,1500],[points_data[5][1],points_data[4][1],points_data[1][1], points_data[3][1]], yerr= [[points_data[5][1]-points_data[5][0],points_data[4][1]-points_data[4][0], points_data[1][1]-points_data[1][0], points_data[3][1]-points_data[3][0]],[points_data[5][2]-points_data[5][1], points_data[4][2]-points_data[4][1], points_data[1][2]-points_data[1][1], points_data[3][2]-points_data[3][1]]],marker="s",c="b", linestyle="--",label="Simulation",linewidth=2)
@@ -207,6 +208,7 @@ else:
     plt.xlim((800,1600))
 
     plt.legend()
-    plt.savefig("./deposition/output_plt_width/wv_rpm.pdf") 
+    plt.savefig("./deposition/output_plt_width/wv_rpm.pdf",dpi=300, bbox_inches='tight')
+    plt.savefig("./deposition/output_plt_width/wv_rpm.jpg",dpi=300, bbox_inches='tight')
 
 plt.show()

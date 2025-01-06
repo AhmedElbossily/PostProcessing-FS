@@ -69,7 +69,7 @@ def function(files_list, path_1, ex_x, ex_y, avarage_error_list,max_temp_error,c
      df["Points:1"] *= 1000
      df["Points:2"] *= 1000
      df["Temperature"] -= 273
-     df = df.drop(df[df['Points:2'] < 0.5].index)
+     df = df.drop(df[df['Points:2'] <= -1.].index)
      start = -40
      stop = 40  # Note: stop is exclusive in rang
      step = 2
@@ -90,27 +90,28 @@ def function(files_list, path_1, ex_x, ex_y, avarage_error_list,max_temp_error,c
 
 def plot_chart(bins, temp_list, ex_x, ex_y,chart_tilte):
    # setting font sizeto 30
-   plt.rcParams.update({'font.size': 12})
-   plt.plot(bins, temp_list, color = "b")  
-   #plt.scatter(ex_x, ex_y,marker="*", color="r")
-   #plt.text(-39, 215, 'Advancing side')
-   #plt.text(15, 215, 'Retreating side')
+   plt.rcParams.update({'font.size': 15})
+   plt.plot(bins, temp_list, color = "b",label="Simulation")
+   plt.scatter(ex_x, ex_y,marker="*", color="r", label="Experiment")
+   plt.text(-30, 215, 'AS')
+   plt.text(25, 215, 'RS')
 
-   #plt.title(chart_tilte)
-  # plt.xlabel("Distance to substrate center [mm]")
-   #plt.ylabel("Temperature [°C]")
+   plt.title(chart_tilte)
+   plt.xlabel("Distance to substrate center [mm]")
+   plt.ylabel("Temperature [°C]")
    plt.legend()
    plt.grid()
+   plt.savefig("./output/"+chart_tilte[:3]+chart_tilte[4]+".pdf", dpi=300, bbox_inches='tight')
    plt.savefig("./output/"+chart_tilte[:3]+chart_tilte[4]+".jpg", dpi=300, bbox_inches='tight')
    plt.show() 
 
 ####################################################################################################################################################     
 chart_tilte=""
-path_1 = './1200-6'  #set A
-#path_1 = './900-6'  #set B # change smoothing length to 3
-#path_1 = './1500-6' #set C
-#path_1 = './1200-4' #set D
-#path_1 = './1200-8' #set E
+path_1 = './1200-6'  #set A 0.5
+path_1 = './900-6'  #set B # 0.5
+path_1 = './1500-6' #set C 0.1
+path_1 = './1200-4' #set D 0
+""" path_1 = './1200-8' #set E  0.75  """
 
 if path_1 =='./1200-6':
   chart_tilte = "Set A: 1200 rpm, 6 mm/s"
@@ -150,5 +151,5 @@ for i, val in enumerate(ex_x):
   error.append(e)
   print(e)
 
-print("av error: ", np.mean(error))
+print("av error: ", np.mean(error[1:-1]))
 plot_chart(bins, max_temp_values, ex_x, ex_y, chart_tilte)

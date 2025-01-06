@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 
 
-variable = '1200'
+variable = '0900'
 
 def read_3d_points(filepath):
     df = pd.read_csv(filepath)
@@ -36,7 +36,6 @@ def sample_width(points_total, points, step):
 def plot_total_points(points_total, title, bins):
     x_values_max = np.full(len(bins), 50)
     x_values_min = np.full(len(bins), 40)
-    #plt.figure(figsize=(13, 5))
     plt.scatter(points_total[:, 0], points_total[:, 1], s=400, c='royalblue', alpha=1, label='deposited particles') 
     for i in range(0, len(bins)):
         if i == 0:
@@ -56,8 +55,8 @@ def plot_total_points(points_total, title, bins):
     plt.show()
 
 def plot_data(filepaths, step=2):
-    #plt.figure(figsize=(13, 5))
-    #plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(13, 5))
+    plt.figure(figsize=(12, 6))
     plt.rcParams.update({'font.size': 20})
     plt.xlim((-11, 14))
 
@@ -84,8 +83,8 @@ def plot_data(filepaths, step=2):
 
 # Example usage
 filepaths = [
-    (f'./in_{variable}_r3.csv', f'./total_{variable}.csv'),
-    (f'./out_{variable}_r3.csv', f'./total_{variable}.csv'),
+    (f'./in_{variable}_r4.csv', f'./total_{variable}.csv'),
+    (f'./out_{variable}_r4.csv', f'./total_{variable}.csv'),
 
 ]
 

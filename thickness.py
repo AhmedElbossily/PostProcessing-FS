@@ -120,7 +120,7 @@ for path in paths:
     z_coords = df["Points:2"].to_numpy()
 
     # Calculate thickness in cells
-    cell_counts, cell_thicknesses = calculate_thickness_in_cells(x_coords, y_coords, z_coords, cell_size=(2, 2, 3))
+    cell_counts, cell_thicknesses = calculate_thickness_in_cells(x_coords, y_coords, z_coords, cell_size=(2, 2, 3.2))
     
     # Save cell_thicknesses to a CSV file
     csv_file_path = "./deposition/All_thicknesses.csv"
@@ -178,7 +178,7 @@ for path in paths:
 
     # Plotting
     fig, ax = plt.subplots(figsize=(13, 5))
-    plt.rcParams.update({'font.size': 20})
+    #plt.rcParams.update({'font.size': 20})
     #plt.rcParams["figure.figsize"] = (13,5)
 
     #plt.title(f"Deposition Thickness Distribution: {path[-15:-4]}")
@@ -205,12 +205,12 @@ for path in paths:
     #ax.text(15, -2, 'Direction')
 
     plt.tight_layout()
-    plt.savefig(f"./deposition/output_plt/thickness_validation_{path[-15:-4]}.jpg", dpi=300, bbox_inches='tight')
+    #plt.savefig(f"./deposition/output_plt/thickness_validation_{path[-15:-4]}.jpg", dpi=300, bbox_inches='tight')
     #plt.show()
 
 marker_list = ["*","s","*"]
 plt.figure()
-plt.rcParams.update({'font.size': 12})
+plt.rcParams.update({'font.size': 15})
 
 """ for i in range(0,3):
     plt.plot(4,t_1200_4[i],marker=marker_list[i], c="b")
@@ -242,9 +242,11 @@ rpm=1
 if rpm == 0:
     plt.errorbar([4,6,8],[t_1200_4[1],t_1200_6[1],t_1200_8[1]], yerr=[[t_1200_4[1]-t_1200_4[0], t_1200_6[1]-t_1200_6[0], t_1200_8[1]-t_1200_8[0]], [t_1200_4[2]-t_1200_4[1], t_1200_6[2]-t_1200_6[1], t_1200_8[2]-t_1200_8[1]]],marker="s",c="b", linestyle="--",label="Simulation", linewidth=2)
     plt.errorbar([4,6,8],[exp_t_1200_4[1],exp_t_1200_6[1], exp_t_1200_8[1] ],  yerr=[[exp_t_1200_4[1]-exp_t_1200_4[0], exp_t_1200_6[1]-exp_t_1200_6[0], exp_t_1200_8[1]-exp_t_1200_8[0]], [exp_t_1200_4[2]-exp_t_1200_4[1], exp_t_1200_6[2]-exp_t_1200_6[1], exp_t_1200_8[2]-exp_t_1200_8[1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
+    plt.ylim((0,4))
     plt.xlabel("Substrate traverse speed [mm/s]")
     plt.legend()
-    plt.savefig("./deposition/output_plt/tft_2.pdf")
+    #plt.savefig("./deposition/output_plt/Figure_13b.pdf",dpi=300, bbox_inches='tight')
+    plt.savefig("./deposition/output_plt/Figure_13b.jpg",dpi=300, bbox_inches='tight')
 
 else:
     plt.errorbar([900,1200,1500], [t_0900_6[1],t_1200_6[1],t_1500_6[1]], yerr=[[t_0900_6[1]-t_0900_6[0], t_1200_6[1]-t_1200_6[0], t_1500_6[1]-t_1500_6[0]], [t_0900_6[2]-t_0900_6[1], t_1200_6[2]-t_1200_6[1], t_1500_6[2]-t_1500_6[1]]],marker="s",c="b", linestyle="--",label="Simulation", linewidth=2)
@@ -253,10 +255,12 @@ else:
     #plt.errorbar([900,1200,1500],[exp_t_900_6[1],exp_t_1200_6[1], exp_t_1500_6[1]], yerr=[[exp_t_900_6[1]-exp_t_900_6[0], exp_t_1200_6[1]-exp_t_1200_6[0], exp_t_1500_6[1]-exp_t_1500_6[0]], [exp_t_900_6[2]-exp_t_900_6[1], exp_t_1200_6[2]-exp_t_1200_6[1], exp_t_1500_6[2]-exp_t_1500_6[1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
     #plt.errorbar([600,900,1200,1500],[exp_t_600_6[1],exp_t_900_6[1],exp_t_1200_6[1], exp_t_1500_6[1]], yerr=[[exp_t_600_6[1]-exp_t_600_6[0],exp_t_900_6[1]-exp_t_900_6[0], exp_t_1200_6[1]-exp_t_1200_6[0], exp_t_1500_6[1]-exp_t_1500_6[0]], [exp_t_600_6[2]-exp_t_600_6[1],exp_t_900_6[2]-exp_t_900_6[1], exp_t_1200_6[2]-exp_t_1200_6[1], exp_t_1500_6[2]-exp_t_1500_6[1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
     plt.errorbar([900,1200,1500],[exp_t_900_6[1],exp_t_1200_6[1], exp_t_1500_6[1]], yerr=[[exp_t_900_6[1]-exp_t_900_6[0], exp_t_1200_6[1]-exp_t_1200_6[0], exp_t_1500_6[1]-exp_t_1500_6[0]], [exp_t_900_6[2]-exp_t_900_6[1], exp_t_1200_6[2]-exp_t_1200_6[1], exp_t_1500_6[2]-exp_t_1500_6[1]]], c="r", marker="^", linestyle= "dotted",label="Experiment", linewidth=2)
-   
+    plt.ylim((0,4))
+    plt.xlim((800,1600))
     plt.xlabel("Rod rotational speed [rpm]")
     plt.legend()
     #plt.title("Results of the new model for 1500 rpm only")
-    plt.savefig("./deposition/output_plt/tfr_2.pdf")
+    #plt.savefig("./deposition/output_plt/Figure_13d.pdf",dpi=300, bbox_inches='tight')
+    plt.savefig("./deposition/output_plt/Figure_13d.jpg",dpi=300, bbox_inches='tight')
 
 plt.show()

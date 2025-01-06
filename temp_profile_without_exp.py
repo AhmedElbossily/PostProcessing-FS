@@ -65,7 +65,7 @@ def function(files_list, path_1, ex_x, ex_y, avarage_error_list,max_temp_error,c
      df["Points:1"] *= 1000
      df["Points:2"] *= 1000
      df["Temperature"] -= 273
-     df = df.drop(df[df['Points:2'] < -.5].index)
+     #df = df.drop(df[df['Points:2'] < -.5].index)
      start = -40
      stop = 40  # Note: stop is exclusive in rang
      step = 2
@@ -116,7 +116,7 @@ def function(files_list, path_1, ex_x, ex_y, avarage_error_list,max_temp_error,c
 
 def plot_chart(bins, temp_list, ex_x, ex_y,chart_tilte):
    # setting font sizeto 30
-   plt.rcParams.update({'font.size': 12})
+   plt.rcParams.update({'font.size': 15})
    plt.plot(bins, temp_list, label="Simulation", color = "b")  
    #plt.scatter(ex_x, ex_y, label="Experiment",marker="*", color="r")
    plt.text(-39, 215, 'Advancing side')
